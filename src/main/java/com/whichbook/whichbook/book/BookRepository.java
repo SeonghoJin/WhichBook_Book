@@ -1,4 +1,4 @@
-package com.whichbook.whichbook.domain;
+package com.whichbook.whichbook.book;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
