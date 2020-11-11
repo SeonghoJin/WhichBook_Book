@@ -27,14 +27,12 @@ public class MainController {
 
         ResponseEntity response = apiService.search_default(dto);
 
-        ResponseEntity responseEntity = Optional
+        response = Optional
                 .of(response)
-                .filter(
-                    (res) -> res.equals(HttpStatus.OK)
-                )
-                .orElse(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
+                .filter((res) -> res.getStatusCode().equals(HttpStatus.OK))
+                .orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
 
-        return responseEntity;
+        return response;
     }
 
 
@@ -47,14 +45,12 @@ public class MainController {
 
         ResponseEntity response = apiService.search_detail(dto);
 
-        ResponseEntity responseEntity = Optional
+        response = Optional
                 .of(response)
-                .filter(
-                        (res) -> res.equals(HttpStatus.OK)
-                )
-                .orElse(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
+                .filter((res) -> res.getStatusCode().equals(HttpStatus.OK))
+                .orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
 
-        return responseEntity;
+        return response;
     }
 
 
