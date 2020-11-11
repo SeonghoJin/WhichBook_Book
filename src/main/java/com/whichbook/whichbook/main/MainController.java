@@ -50,4 +50,18 @@ public class MainController {
         return response;
     }
 
+
+    @GetMapping("/search_detail")
+    public ResponseEntity search_detail(DetailSearchBookRequestDto dto){
+
+        ResponseEntity response = apiService.search_detail(dto);
+
+        if(response.getStatusCode().equals(HttpStatus.OK)){
+            return ResponseEntity.ok("Hi");
+        }
+
+        return response;
+    }
+
+
 }

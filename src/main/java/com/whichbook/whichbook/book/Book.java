@@ -3,7 +3,9 @@ package com.whichbook.whichbook.book;
 import com.sun.istack.NotNull;
 import lombok.*;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
@@ -14,7 +16,10 @@ import javax.persistence.Id;
 @AllArgsConstructor
 public class Book {
 
-    @Id
+    @Id @GeneratedValue
+    long id;
+
+    @Column(unique = true)
     String isbn;
 
     String title;

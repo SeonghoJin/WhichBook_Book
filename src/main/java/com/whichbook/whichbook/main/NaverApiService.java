@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -32,6 +33,30 @@ public class NaverApiService {
                 .queryParam("query", dto.getQuery())
                 .queryParam("display", dto.getDisplay())
                 .queryParam("start", dto.getStart())
+                .build();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-Naver-Client-Id", client_id);
+        headers.set("X-Naver-Client-Secret", client_secret);
+
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+
+        ResponseEntity<String> response = restTemplate
+                .exchange(
+                        String.valueOf(uriComponents),
+                        HttpMethod.GET,
+                        entity,
+                        String.class
+                );
+
+        return response;
+    }
+
+    public ResponseEntity search_detail(DetailSearchBookRequestDto dto){
+
+        UriComponents uriComponents = UriComponentsBuilder
+                .fromHttpUrl(String.valueOf(naverDetailSearchURL))
+                .queryParam("d_isbn", dto.getD_isbn())
                 .build();
 
         HttpHeaders headers = new HttpHeaders();
