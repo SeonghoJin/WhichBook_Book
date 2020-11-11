@@ -1,4 +1,4 @@
-package com.whichbook.whichbook.main;
+package com.whichbook.whichbook.main.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

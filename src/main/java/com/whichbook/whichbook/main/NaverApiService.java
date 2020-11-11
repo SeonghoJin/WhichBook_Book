@@ -1,5 +1,7 @@
 package com.whichbook.whichbook.main;
 
+import com.whichbook.whichbook.main.dto.DefaultSearchBookRequestDto;
+import com.whichbook.whichbook.main.dto.DetailSearchBookRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -7,7 +9,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -56,7 +57,7 @@ public class NaverApiService {
 
         UriComponents uriComponents = UriComponentsBuilder
                 .fromHttpUrl(String.valueOf(naverDetailSearchURL))
-                .queryParam("d_isbn", dto.getD_isbn())
+                .queryParam("d_isbn", dto.getIsbn())
                 .build();
 
         HttpHeaders headers = new HttpHeaders();
