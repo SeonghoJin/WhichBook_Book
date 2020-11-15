@@ -5,6 +5,5 @@ import lombok.Data;
 
 @Data
 public class RSSVO {
-    String version;
     ChannelVO channel;
 }

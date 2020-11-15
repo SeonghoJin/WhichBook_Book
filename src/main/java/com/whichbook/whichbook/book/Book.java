@@ -1,43 +1,40 @@
 package com.whichbook.whichbook.book;
 
-import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
 
-@Entity
-@Builder
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Entity @Builder
+@Getter @Setter
+@NoArgsConstructor @AllArgsConstructor
 public class Book {
 
     @Id @GeneratedValue
     long id;
 
     @Column(unique = true)
-    String isbn;
+    private String isbn;
 
-    String title;
+    private String title;
 
-    String link;
+    private String link;
 
-    String image;
+    private String image;
 
-    String author;
+    private String author;
 
-    String price;
+    private String price;
 
-    String discount;
+    private String discount;
 
-    String publisher;
+    private String publisher;
 
-    String pubdate;
+    private String description;
 
-    String descripton;
+    private LocalDateTime pubdate;
 
 }
