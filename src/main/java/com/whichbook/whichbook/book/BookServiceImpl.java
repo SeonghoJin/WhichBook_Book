@@ -26,22 +26,18 @@ public class BookServiceImpl implements BookService {
 
     public List<Book> search(SearchBookRequestDto dto){
 
-        String title = dto.getTitle();
-
-        List<Book> bookList = bookRepository.findAllByTitleContains(title);
+        List<Book> bookList = bookRepository.findAllByTitleContains(dto.getTitle());
 
         if(!bookList.isEmpty()){
             return bookList;
         }
 
         bookList = searchUsingApiService(dto);
-        for(int i = 0; i < bookList.size(); i++){
-            Book book = bookList.get(i);
-            String isbn = book.getIsbn();
-            if(!bookRepository.existsByIsbn(isbn)){
-                bookRepository.save(book);
-            }
-        }
+
+        List<Book> newBookList = bookList.stream().filter((book) -> {
+            return !bookRepository.existsByIsbn(book.getIsbn());
+        }).collect(Collectors.toList());
+        bookRepository.saveAll(newBookList);
 
         return bookList;
     }
@@ -60,28 +56,21 @@ public class BookServiceImpl implements BookService {
     private List<Book> toBookList(ResponseEntity<String> response){
 
         JSONObject json = XML.toJSONObject(response.getBody());
-
         SearchResponseVo vo = modelMapper
                 .map(json.toMap(), SearchResponseVo.class);
 
         Object item = vo.getRss().getChannel().getItem();
+
         int itemSize = Integer.parseInt(vo.getRss().getChannel().getTotal());
 
         List<Book> bookLists = new ArrayList<Book>();
 
-        if(itemSize == 0){
-            return bookLists;
-        }
-        else if(itemSize == 1){
+        if(itemSize == 1){
             Book book = modelMapper.map(item, Book.class);
             bookLists.add(book);
         }
-        else{
+        else if(itemSize > 1){
             bookLists = modelMapper.map(item, new ArrayList<Book>().getClass());
-
-//            bookLists.stream().map((book) -> {
-//                return modelMapper.map(book,Book.class);
-//            }).collect(Collectors.toList());
             for(int i = 0; i < bookLists.size(); i++){
                 bookLists.set(i, modelMapper.map(bookLists.get(i), Book.class));
             }

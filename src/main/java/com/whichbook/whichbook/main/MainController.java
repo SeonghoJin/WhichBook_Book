@@ -1,9 +1,6 @@
 package com.whichbook.whichbook.main;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.whichbook.whichbook.api.ApiService;
 import com.whichbook.whichbook.book.Book;
-import com.whichbook.whichbook.book.BookService;
 import com.whichbook.whichbook.main.dto.SearchBookRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
