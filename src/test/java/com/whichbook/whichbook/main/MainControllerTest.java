@@ -1,5 +1,8 @@
 package com.whichbook.whichbook.main;
 
+import com.whichbook.whichbook.book.Book;
+import com.whichbook.whichbook.book.BookRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +11,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.util.NestedServletException;
 
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -19,61 +24,42 @@ class MainControllerTest {
 
     @Autowired
     MockMvc mockmvc;
+
     @Autowired
-    NaverApiService naverApiService;
+    BookRepository bookRepository;
 
     @Test
-    @DisplayName("기본 검색 테스트 - 성공")
-    public void successDefaultSearchTest () throws Exception{
+    @DisplayName("검색 테스트 - 성공(결과 하나일 경우)")
+    public void successSearchTestWithSingleResult () throws Exception{
+
+        String titl = "이것이 취업을 위한 코딩 테스트다 with 파이썬";
         mockmvc.perform(get("/search")
-                        .param("query","진성호")
-                        .param("start", "2")
-                        .param("display", "21"))
-                        .andExpect(status().isOk());
-    }
-
-    @Test
-    @DisplayName("기본 검색 테스트 - 실패 (요청 변수 부족)")
-    public void failDefaultSearchTestWithBadRequest () throws Exception{
-            mockmvc.perform(get("/search")
-                    .param("start", "2"))
-                    .andExpect(status().isBadRequest());
-    }
-
-    //내부 엑셉션이 떠는데..?? 이게머지
-    @Test
-    @DisplayName("기본 검색 테스트 - 실패 (서버 내부 에러)")
-    public void failDefaultSearchTestWithInternalSeverError () throws Exception{
-        try {
-            mockmvc.perform(get("/search")
-                    .param("query","진성호")
-                    .param("sardsfas", "sadd"));
-        } catch (NestedServletException e){
-            e.getCause();
-        }
-    }
-
-    @Test
-    @DisplayName("상세 검색 테스트 - 성공")
-    public void successDetailSearchTest () throws Exception{
-        mockmvc.perform(get("/search_detail")
-                .param("isbn", "8936438034 9788936438036"))
+                .param("title", titl))
                 .andExpect(status().isOk());
+
+        List<Book> book = bookRepository.findAllByTitleContains(titl);
+        assertThat(book).isNotEmpty();
     }
 
+
     @Test
-    @DisplayName("상세 검색 테스트 - 실패 (요청 변수 부족)")
-    public void failDetailSearchTestWithBadRequest () throws Exception{
-            mockmvc.perform(get("/search_detail"))
-                    .andExpect(status().isBadRequest());
+    @DisplayName("검색 테스트 - 성공(결과 여러개일 경우)")
+    public void successSearchTestWithMultiResult () throws Exception{
+        mockmvc.perform(get("/search")
+                .param("title", "이것이"))
+                .andExpect(status().isOk());
+
+        List<Book> book = bookRepository.findAllByTitleContains("이것이");
+
+        assertThat(book).isNotEmpty();
     }
 
-    //내부 엑셉션이 떠는데..?? 이게머지
+
     @Test
-    @DisplayName("상세 검색 테스트 - 실패 (서버 내부 에러)")
+    @DisplayName("검색 테스트 - 실패 (서버 내부 에러)")
     public void failDetailSearchTestWithInternalSeverError () throws Exception{
         try {
-            mockmvc.perform(get("/search_detail")
+            mockmvc.perform(get("/search")
                     .param("sardsfas", "sadd"));
         } catch (NestedServletException e){
             e.getCause();

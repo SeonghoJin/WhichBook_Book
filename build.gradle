@@ -19,6 +19,8 @@ repositories {
 }
 
 dependencies {
+    // https://mvnrepository.com/artifact/org.modelmapper/modelmapper
+    compile group: 'org.modelmapper', name: 'modelmapper', version: '2.3.0'
     compile group: 'org.hibernate', name: 'hibernate-validator', version: '6.1.0.Final'
     compile group: 'org.json', name: 'json', version: '20160810'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'

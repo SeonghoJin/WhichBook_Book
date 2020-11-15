@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
 
 @Entity
 @Builder
@@ -14,30 +15,31 @@ import javax.persistence.Id;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(of = "id")
 public class Book {
 
     @Id @GeneratedValue
-    long id;
+    private long id;
 
     @Column(unique = true)
-    String isbn;
+    private String isbn;
 
-    String title;
+    private String title;
 
-    String link;
+    private String link;
 
-    String image;
+    private String image;
 
-    String author;
+    private String author;
 
-    String price;
+    private String price;
 
-    String discount;
+    private String discount;
 
-    String publisher;
+    private String publisher;
 
-    String pubdate;
+    private LocalDateTime pubdate;
 
-    String descripton;
+    private String description;
 
 }

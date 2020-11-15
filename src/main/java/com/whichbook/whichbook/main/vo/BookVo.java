@@ -1,9 +1,11 @@
-package com.whichbook.whichbook.main.vo.detail_search_response_vo;
+package com.whichbook.whichbook.main.vo;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
-public class BookVO {
+public class BookVo {
 
     String title;
     String link;
@@ -12,7 +14,7 @@ public class BookVO {
     String price;
     String discount;
     String publisher;
-    String pubdate;
+    LocalDateTime pubdate;
     String isbn;
     String description;
 
