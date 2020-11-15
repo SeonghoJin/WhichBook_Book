@@ -37,8 +37,8 @@ class MainControllerTest {
                 .param("title", titl))
                 .andExpect(status().isOk());
 
-        List<Book> book = bookRepository.findAllByTitleContains(titl);
-        assertThat(book).isNotEmpty();
+        List<Book> bookList = bookRepository.findAllByTitleContains(titl);
+        assertThat(bookList).isNotEmpty();
     }
 
 
@@ -49,9 +49,8 @@ class MainControllerTest {
                 .param("title", "이것이"))
                 .andExpect(status().isOk());
 
-        List<Book> book = bookRepository.findAllByTitleContains("이것이");
-
-        assertThat(book).isNotEmpty();
+        List<Book> bookList = bookRepository.findAllByTitleContains("이것이");
+        assertThat(bookList).isNotEmpty();
     }
 
 
