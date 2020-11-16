@@ -46,10 +46,14 @@ class MainControllerTest {
     @DisplayName("검색 테스트 - 성공(결과 여러개일 경우)")
     public void successSearchTestWithMultiResult () throws Exception{
         mockmvc.perform(get("/search")
-                .param("title", "이것이"))
+                .param("title", "you"))
                 .andExpect(status().isOk());
 
-        List<Book> bookList = bookRepository.findAllByTitleContains("이것이");
+        mockmvc.perform(get("/search")
+                .param("title", "saas"))
+                .andExpect(status().isOk());
+
+        List<Book> bookList = bookRepository.findAllByTitleContains("yo");
         assertThat(bookList).isNotEmpty();
     }
 
