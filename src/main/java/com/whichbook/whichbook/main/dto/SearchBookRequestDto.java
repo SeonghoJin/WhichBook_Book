@@ -1,6 +1,7 @@
 package com.whichbook.whichbook.main.dto;
 
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.validation.constraints.NotEmpty;
 
@@ -11,7 +12,8 @@ public class SearchBookRequestDto {
 
     String start = "1";
 
-    String d_catg = "280";
+    @Value("${naver.book.catgory-it}")
+    String d_catg;
 
     @NotEmpty
     String title;
