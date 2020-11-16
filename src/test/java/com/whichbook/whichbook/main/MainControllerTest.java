@@ -2,6 +2,7 @@ package com.whichbook.whichbook.main;
 
 import com.whichbook.whichbook.book.Book;
 import com.whichbook.whichbook.book.BookRepository;
+import com.whichbook.whichbook.main.dto.SearchBookRequestDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,12 +27,29 @@ class MainControllerTest {
     MockMvc mockmvc;
 
     @Autowired
+    MainService mainService;
+
+    @Autowired
     BookRepository bookRepository;
+
+    @Test
+    @DisplayName("검색 테스트 - 성공")
+    public void searchTestUsingMainService () throws Exception{
+        String titl = "이것이 취업을 위한 코딩 테스트다 with 파이썬";
+        SearchBookRequestDto dto = new SearchBookRequestDto();
+        dto.setTitle(titl);
+
+        List<Book> bookList = mainService.search(dto);
+        assertThat(bookList).isNotEmpty();
+
+        bookList = bookRepository.findAllByTitleContains(titl);
+        assertThat(bookList).isNotEmpty();
+    }
+
 
     @Test
     @DisplayName("검색 테스트 - 성공(결과 하나일 경우)")
     public void successSearchTestWithSingleResult () throws Exception{
-
         String titl = "이것이 취업을 위한 코딩 테스트다 with 파이썬";
         mockmvc.perform(get("/search")
                 .param("title", titl))
@@ -40,7 +58,6 @@ class MainControllerTest {
         List<Book> bookList = bookRepository.findAllByTitleContains(titl);
         assertThat(bookList).isNotEmpty();
     }
-
 
     @Test
     @DisplayName("검색 테스트 - 성공(결과 여러개일 경우)")

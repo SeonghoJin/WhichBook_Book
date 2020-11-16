@@ -1,11 +1,13 @@
 package com.whichbook.whichbook.main.dto;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.validation.constraints.NotEmpty;
 
-
+@NoArgsConstructor
 @Data
 public class SearchBookRequestDto {
     String display = "20";
