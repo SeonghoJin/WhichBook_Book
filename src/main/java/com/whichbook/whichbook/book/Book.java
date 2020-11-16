@@ -3,10 +3,7 @@ package com.whichbook.whichbook.book;
 import com.sun.istack.NotNull;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -21,7 +18,6 @@ public class Book {
     @Id @GeneratedValue
     private long id;
 
-    @Column(unique = true)
     private String isbn;
 
     private String title;
@@ -40,6 +36,7 @@ public class Book {
 
     private LocalDateTime pubdate;
 
+    @Column(columnDefinition = "TEXT")
     private String description;
 
 }
