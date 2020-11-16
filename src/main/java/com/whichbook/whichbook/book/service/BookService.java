@@ -1,5 +1,6 @@
-package com.whichbook.whichbook.book;
+package com.whichbook.whichbook.book.service;
 
+import com.whichbook.whichbook.book.Book;
 import com.whichbook.whichbook.main.dto.SearchBookRequestDto;
 import java.util.List;
 
