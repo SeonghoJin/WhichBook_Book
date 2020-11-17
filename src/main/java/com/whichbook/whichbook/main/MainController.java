@@ -1,7 +1,8 @@
 package com.whichbook.whichbook.main;
 
 import com.whichbook.whichbook.book.Book;
-import com.whichbook.whichbook.main.dto.SearchBookRequestDto;
+import com.whichbook.whichbook.book.dto.BookRequestDto;
+import com.whichbook.whichbook.book.dto.BookResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.validation.Errors;
@@ -18,17 +19,21 @@ public class MainController {
 
     private final MainService mainService;
 
+
+
     @GetMapping("/search")
-    public ResponseEntity<?> search(@Valid SearchBookRequestDto dto, Errors errors){
+    public ResponseEntity<?> search(@Valid BookRequestDto dto, Errors errors){
 
         if(errors.hasErrors()){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
-        List<Book> bookList = mainService.search(dto);
+        List<BookResponseDto> bookList = mainService.search(dto);
 
         return ResponseEntity.ok(bookList);
     }
+
+
 
 
 

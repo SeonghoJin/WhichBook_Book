@@ -1,6 +1,10 @@
 package com.whichbook.whichbook.main.vo;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class ChannelVo {
@@ -11,5 +15,6 @@ public class ChannelVo {
     String total;
     String start;
     String display;
-    Object item;
+    @JacksonXmlElementWrapper(useWrapping = false)
+    List<BookVo> item = new ArrayList<>();
 }

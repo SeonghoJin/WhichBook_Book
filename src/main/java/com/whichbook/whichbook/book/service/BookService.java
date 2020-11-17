@@ -1,12 +1,13 @@
 package com.whichbook.whichbook.book.service;
 
-import com.whichbook.whichbook.book.Book;
-import com.whichbook.whichbook.main.dto.SearchBookRequestDto;
+import com.whichbook.whichbook.book.dto.BookRequestDto;
+import com.whichbook.whichbook.book.dto.BookResponseDto;
+
 import java.util.List;
 
 public interface BookService {
 
-    public List<Book> search(SearchBookRequestDto dto);
+    public List<BookResponseDto> search(BookRequestDto dto);
 
 }
 

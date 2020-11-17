@@ -12,12 +12,13 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(of = "isbn")
 public class Book {
 
     @Id @GeneratedValue
     private long id;
 
+    @Column(unique = true)
     private String isbn;
 
     private String title;

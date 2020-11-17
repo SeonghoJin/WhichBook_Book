@@ -2,8 +2,8 @@ package com.whichbook.whichbook.main;
 
 import com.whichbook.whichbook.book.Book;
 import com.whichbook.whichbook.book.BookRepository;
-import com.whichbook.whichbook.main.dto.SearchBookRequestDto;
-import org.assertj.core.api.Assertions;
+import com.whichbook.whichbook.book.dto.BookRequestDto;
+import com.whichbook.whichbook.book.dto.BookResponseDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,13 +36,10 @@ class MainControllerTest {
     @DisplayName("검색 테스트 - 성공")
     public void searchTestUsingMainService () throws Exception{
         String titl = "이것이 취업을 위한 코딩 테스트다 with 파이썬";
-        SearchBookRequestDto dto = new SearchBookRequestDto();
+        BookRequestDto dto = new BookRequestDto();
         dto.setTitle(titl);
 
-        List<Book> bookList = mainService.search(dto);
-        assertThat(bookList).isNotEmpty();
-
-        bookList = bookRepository.findAllByTitleContains(titl);
+        List<BookResponseDto> bookList = mainService.search(dto);
         assertThat(bookList).isNotEmpty();
     }
 
@@ -55,7 +52,7 @@ class MainControllerTest {
                 .param("title", titl))
                 .andExpect(status().isOk());
 
-        List<Book> bookList = bookRepository.findAllByTitleContains(titl);
+        List<Book> bookList = bookRepository.findAll();
         assertThat(bookList).isNotEmpty();
     }
 
@@ -63,14 +60,10 @@ class MainControllerTest {
     @DisplayName("검색 테스트 - 성공(결과 여러개일 경우)")
     public void successSearchTestWithMultiResult () throws Exception{
         mockmvc.perform(get("/search")
-                .param("title", "you"))
-                .andExpect(status().isOk());
-
-        mockmvc.perform(get("/search")
                 .param("title", "saas"))
                 .andExpect(status().isOk());
 
-        List<Book> bookList = bookRepository.findAllByTitleContains("yo");
+        List<Book> bookList = bookRepository.findAll();
         assertThat(bookList).isNotEmpty();
     }
 
