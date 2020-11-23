@@ -19,9 +19,7 @@ public class MainController {
 
     private final MainService mainService;
 
-
-
-    @GetMapping("/search")
+    @GetMapping("/book/search")
     public ResponseEntity<?> search(@Valid BookRequestDto dto, Errors errors){
 
         if(errors.hasErrors()){
@@ -32,9 +30,5 @@ public class MainController {
 
         return ResponseEntity.ok(bookList);
     }
-
-
-
-
 
 }
