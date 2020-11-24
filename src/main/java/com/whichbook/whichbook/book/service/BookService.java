@@ -7,7 +7,8 @@ import java.util.List;
 
 public interface BookService {
 
-    public List<BookResponseDto> search(BookRequestDto dto);
+    List<BookResponseDto> search(BookRequestDto dto);
 
+    BookResponseDto findById(Long bookId);
 }
 

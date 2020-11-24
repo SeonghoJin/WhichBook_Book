@@ -2,6 +2,7 @@ package com.whichbook.whichbook.book.service;
 
 import com.whichbook.whichbook.api.ApiService;
 import com.whichbook.whichbook.book.Book;
+import com.whichbook.whichbook.book.BookNotFoundException;
 import com.whichbook.whichbook.book.BookRepository;
 import com.whichbook.whichbook.book.dto.BookRequestDto;
 import com.whichbook.whichbook.book.dto.BookResponseDto;
@@ -9,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -31,6 +31,13 @@ public class BookServiceWithApi implements BookService {
         });
 
         return booksInApi.stream().map(BookResponseDto::of).collect(Collectors.toList());
+    }
+
+    @Override
+    public BookResponseDto findById(Long bookId) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new BookNotFoundException(bookId + "에 해당하는 책이 없습니다."));
+        return BookResponseDto.of(book);
     }
 
 }

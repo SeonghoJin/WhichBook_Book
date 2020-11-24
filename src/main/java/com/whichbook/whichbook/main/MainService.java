@@ -22,4 +22,8 @@ public class MainService {
 
         return bookList;
     }
+
+    public BookResponseDto findBookById(Long bookId) {
+        return bookService.findById(bookId);
+    }
 }
