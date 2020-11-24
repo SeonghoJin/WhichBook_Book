@@ -48,7 +48,7 @@ class MainControllerTest {
     @DisplayName("검색 테스트 - 성공(결과 하나일 경우)")
     public void successSearchTestWithSingleResult () throws Exception{
         String titl = "이것이 취업을 위한 코딩 테스트다 with 파이썬";
-        mockmvc.perform(get("/search")
+        mockmvc.perform(get("/book/search")
                 .param("title", titl))
                 .andExpect(status().isOk());
 
@@ -59,7 +59,7 @@ class MainControllerTest {
     @Test
     @DisplayName("검색 테스트 - 성공(결과 여러개일 경우)")
     public void successSearchTestWithMultiResult () throws Exception{
-        mockmvc.perform(get("/search")
+        mockmvc.perform(get("/book/search")
                 .param("title", "saas"))
                 .andExpect(status().isOk());
 
@@ -72,7 +72,7 @@ class MainControllerTest {
     @DisplayName("검색 테스트 - 실패 (서버 내부 에러)")
     public void failDetailSearchTestWithInternalSeverError () throws Exception{
         try {
-            mockmvc.perform(get("/search")
+            mockmvc.perform(get("/book/search")
                     .param("sardsfas", "sadd"));
         } catch (NestedServletException e){
             e.getCause();

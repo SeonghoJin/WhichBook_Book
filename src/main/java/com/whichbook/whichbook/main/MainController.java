@@ -21,12 +21,7 @@ public class MainController {
 
     @GetMapping("/book/search")
     public ResponseEntity<?> search(@Valid BookRequestDto dto, Errors errors){
-        if(errors.hasErrors()){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-
         List<BookResponseDto> bookList = mainService.search(dto);
-
         return ResponseEntity.ok(bookList);
     }
 
