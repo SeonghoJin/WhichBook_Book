@@ -20,13 +20,14 @@ public class MainController {
     private final MainService mainService;
 
     @GetMapping("/book/search")
-    public ResponseEntity<?> search(@Valid BookRequestDto dto, Errors errors){
+    public ResponseEntity<?> search(@Valid BookRequestDto dto){
         List<BookResponseDto> bookList = mainService.search(dto);
         return ResponseEntity.ok(bookList);
     }
 
     @GetMapping("/book/{bookId}")
     public ResponseEntity<?> getBookInfo(@PathVariable Long bookId) {
+
         BookResponseDto responseDto = mainService.findBookById(bookId);
         return ResponseEntity.ok(responseDto);
     }
