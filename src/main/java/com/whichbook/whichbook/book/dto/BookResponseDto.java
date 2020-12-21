@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookResponseDto {
+    private Long bookId;
     private String title;
     private String isbn;
     private String author;
@@ -22,6 +23,7 @@ public class BookResponseDto {
 
     public static BookResponseDto of(Book book) {
         BookResponseDto bookResponseDto = new BookResponseDto();
+        bookResponseDto.setBookId(book.getId());
         bookResponseDto.setTitle(book.getTitle());
         bookResponseDto.setIsbn(book.getIsbn());
         bookResponseDto.setAuthor(book.getAuthor());

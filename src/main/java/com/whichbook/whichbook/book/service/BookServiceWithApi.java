@@ -21,16 +21,18 @@ public class BookServiceWithApi implements BookService {
     private final BookRepository bookRepository;
 
     public List<BookResponseDto> search(BookRequestDto dto){
-
+        //전부다 참조하는게 아닌, 몇개만 가져와야한다.
+        List<Book> books = bookRepository.findAllByTitleContains(dto.getTitle());
         List<Book> booksInApi = apiService.search(dto);
 
-        booksInApi.stream().forEach(book -> {
-            if(!bookRepository.existsByIsbn(book.getIsbn())){
-                bookRepository.save(book);
-            }
-        });
+        booksInApi = booksInApi.stream()
+                .filter((book) -> !books.contains(book))
+                .filter((book) -> !bookRepository.existsByIsbn(book.getIsbn()))
+                .map(bookRepository::save).collect(Collectors.toList());
 
-        return booksInApi.stream().map(BookResponseDto::of).collect(Collectors.toList());
+        books.addAll(booksInApi);
+
+        return books.stream().map(BookResponseDto::of).collect(Collectors.toList());
     }
 
     @Override
