@@ -18,11 +18,14 @@ public class BookResponseDto {
     private String author;
     private String price;
     private String description;
+    private String image;
     private LocalDateTime pubdate;
+
 
 
     public static BookResponseDto of(Book book) {
         BookResponseDto bookResponseDto = new BookResponseDto();
+        bookResponseDto.setImage(book.getImage());
         bookResponseDto.setBookId(book.getId());
         bookResponseDto.setTitle(book.getTitle());
         bookResponseDto.setIsbn(book.getIsbn());
