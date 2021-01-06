@@ -9,9 +9,12 @@ import javax.validation.constraints.NotEmpty;
 @NoArgsConstructor
 @Data
 public class BookRequestDto {
-    String display = "20";
 
-    String start = "1";
+    Long id = 0L;
+
+    int display = 20;
+
+    int start = 1;
 
     String d_catg = "280";
 
