@@ -7,6 +7,7 @@ import com.whichbook.whichbook.book.BookRepository;
 import com.whichbook.whichbook.book.dto.BookRequestDto;
 import com.whichbook.whichbook.book.dto.BookResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,14 +26,16 @@ public class BookServiceWithApi implements BookService {
         List<Book> books = bookRepository.findAllByTitleContains(dto.getTitle());
         List<Book> booksInApi = apiService.search(dto);
 
-        booksInApi = booksInApi.stream()
+        booksInApi.stream()
                 .filter((book) -> !books.contains(book))
                 .filter((book) -> !bookRepository.existsByIsbn(book.getIsbn()))
                 .map(bookRepository::save).collect(Collectors.toList());
 
-        books.addAll(booksInApi);
-
-        return books.stream().map(BookResponseDto::of).collect(Collectors.toList());
+        return bookRepository.findPageByTitle(
+                dto.getTitle(),
+                dto.getId(),
+                PageRequest.of(dto.getStart(),dto.getDisplay()))
+                .stream().map(BookResponseDto::of).collect(Collectors.toList());
     }
 
     @Override

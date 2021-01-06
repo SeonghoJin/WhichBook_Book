@@ -41,7 +41,7 @@ public class NaverApiService implements ApiService {
         UriComponents components = UriComponentsBuilder
                 .fromHttpUrl(String.valueOf(naverDetailSearchURL))
                 .queryParam("d_titl", dto.getTitle())
-                .queryParam("start", dto.getStart())
+                .queryParam("start", dto.getStart()+1)
                 .queryParam("display", dto.getDisplay())
                 .queryParam("d_catg", dto.getD_catg())
                 .encode(StandardCharsets.UTF_8)

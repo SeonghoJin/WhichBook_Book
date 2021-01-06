@@ -14,7 +14,7 @@ public class BookRequestDto {
 
     int display = 20;
 
-    int start = 1;
+    int start = 0;
 
     String d_catg = "280";
 
