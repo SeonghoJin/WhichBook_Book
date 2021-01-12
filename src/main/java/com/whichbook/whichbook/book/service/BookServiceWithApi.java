@@ -34,8 +34,9 @@ public class BookServiceWithApi implements BookService {
 
         booksInApi = booksInApi.stream().map((book -> {
             List<Book> books1 = bookRepository.findAllByTitleContains(book.getTitle());
+            if(books1.size() != 0){
             Long id = books1.get(0).getId();
-            book.setId(id);
+            book.setId(id);}
             return book;
         })).collect(Collectors.toList());
 
