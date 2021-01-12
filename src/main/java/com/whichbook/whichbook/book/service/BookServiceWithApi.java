@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 
@@ -26,7 +27,19 @@ public class BookServiceWithApi implements BookService {
         List<Book> books = bookRepository.findAllByTitleContains(dto.getTitle());
         List<Book> booksInApi = apiService.search(dto);
 
-        return booksInApi.stream().map(BookResponseDto::of).collect(Collectors.toList());
+        booksInApi.stream()
+                .filter((book) -> !books.contains(book))
+                .filter((book) -> !bookRepository.existsByIsbn(book.getIsbn()))
+                .map(bookRepository::save).collect(Collectors.toList());
+
+        booksInApi = booksInApi.stream().map((book -> {
+            List<Book> books1 = bookRepository.findAllByTitleContains(book.getTitle());
+            Long id = books1.get(0).getId();
+            book.setId(id);
+            return book;
+        })).collect(Collectors.toList());
+
+        return booksInApi.stream().map(BookResponseDto::of).collect((Collectors.toList()));
     }
 
     @Override
