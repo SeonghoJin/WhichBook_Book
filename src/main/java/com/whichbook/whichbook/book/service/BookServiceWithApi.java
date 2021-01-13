@@ -33,7 +33,7 @@ public class BookServiceWithApi implements BookService {
                 .map(bookRepository::save).collect(Collectors.toList());
 
         booksInApi = booksInApi.stream().map((book -> {
-            List<Book> books1 = bookRepository.findAllByTitleContains(book.getTitle());
+            List<Book> books1 = bookRepository.findAllByIsbn(book.getIsbn());
             if(books1.size() != 0){
             Long id = books1.get(0).getId();
             book.setId(id);}
